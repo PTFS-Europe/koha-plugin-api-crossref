@@ -4,12 +4,9 @@ use Modern::Perl;
 use strict;
 use warnings;
 
-use File::Basename qw( dirname );
 use JSON qw( decode_json );
 use LWP::UserAgent;
 
-use Koha::Logger;
-use Koha::Patrons;
 use Mojo::Base 'Mojolicious::Controller';
 use Koha::Plugin::Com::PTFSEurope::Crossref;
 
@@ -35,11 +32,7 @@ sub works {
     my $ua = LWP::UserAgent->new;
     my $response = $ua->get("${base_url}${doi}?mailto=$email");
 
-    use Data::Dumper;
-    print STDERR Dumper $response;
-
     if ( $response->is_success ) {
-        print STDERR $response->decoded_content;
         _return_response({ success => decode_json($response->decoded_content) }, $c);
     } else {
         _return_response(
