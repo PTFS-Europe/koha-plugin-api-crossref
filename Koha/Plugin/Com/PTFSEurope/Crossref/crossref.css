@@ -1,0 +1,24 @@
+#crossref_config_h3 {
+    margin: 20px;
+}
+
+#crossref_configure {
+    display: block;
+    margin: 20px;
+}
+
+.crossref_config_field {
+    padding: 20px 10px;
+    margin: 20px 0;
+    background: #eee;
+    border-radius: 10px;
+    list-style: none;
+}
+
+#crossref_upgrade {
+    margin: 20px;
+}
+
+input#crossref_email_input {
+    min-width: 500px;
+}

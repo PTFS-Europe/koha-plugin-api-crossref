@@ -1,0 +1,26 @@
+{
+    "/works": {
+        "get": {
+            "x-mojo-to": "Com::PTFSEurope::Crossref::Api#works",
+            "operationId": "ApiWorksCrossref",
+            "tags": ["crossref", "works"],
+            "parameters": [
+                {
+                    "name": "doi",
+                    "in": "query",
+                    "description": "The DOI being searched for",
+                    "required": true,
+                    "type": "string"
+                }
+            ],
+            "produces": [
+                "application/json"
+            ],
+            "responses": {
+                "200": {
+                    "description": "The result of the 'Works' call to the Crossref API"
+                }
+            }
+        }
+    }
+}
