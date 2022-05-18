@@ -46,6 +46,89 @@ sub works {
     }
 }
 
+sub parse_to_ill {
+    # Validate what we've received
+    my $c = shift->openapi->valid_input or return;
+
+    my $body = $c->validation->param('body');
+
+    my $metadata = $body->{message} || {};    
+
+    # Map Koha core ILL props to Crossref
+    my $mapping = {
+        doi => {
+            prop => 'DOI',
+            value => sub { return shift; }
+        },
+        issn => {
+            prop => 'ISSN',
+            value => sub {
+                my $val = shift;
+                return ${$val}[0];
+            }
+        },
+        title => {
+            prop => 'container-title',
+            value => sub {
+                my $val = shift;
+                return ${$val}[0];
+            }
+        },
+        year => {
+            prop => 'published',
+            value => sub {
+                my $val = shift;
+                return $val->{'date-parts'}[0][0];
+            }
+        },
+        issue => {
+            prop => 'issue',
+            value => sub { return shift; }
+        },
+        pages => {
+            prop => 'page',
+            value => sub { return shift; }
+        },
+        publisher => {
+            prop => 'publisher',
+            value => sub { return shift; }
+        },
+        article_title => {
+            prop => 'title',
+            value => sub { return shift; }
+        },
+        article_author => {
+            prop => 'author',
+            value => sub {
+                my $val = shift;
+                my @authors = ();
+                foreach my $author(@{$val}) {
+                    push @authors, $author->{given} . " " . $author->{family};
+                }
+                return join '; ', @authors;
+            }
+        },
+        volume => {
+            prop => 'volume',
+            value => sub { return shift; }
+        },
+    };
+
+    my $return = {};
+
+    while (my ($k, $v) = each %{$mapping}) {
+        my $crossref_prop_name = $v->{prop};
+        if ($metadata->{$crossref_prop_name}) {
+            $return->{$k} = $v->{value}->($metadata->{$crossref_prop_name});
+        }
+    }
+
+    _return_response(
+        { success => $return },
+        $c
+    );
+}
+
 sub _return_response {
     my ( $response, $c ) = @_;
     return $c->render(

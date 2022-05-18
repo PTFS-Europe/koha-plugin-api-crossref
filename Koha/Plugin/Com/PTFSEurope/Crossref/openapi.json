@@ -22,5 +22,30 @@
                 }
             }
         }
+    },
+    "/parse_to_ill": {
+        "post": {
+            "x-mojo-to": "Com::PTFSEurope::Crossref::Api#parse_to_ill",
+            "operationId": "ApiParseToIllCrossref",
+            "tags": ["crossref", "parseToIll"],
+            "parameters": [
+                {
+                    "name": "body",
+                    "in": "body",
+                    "description": "The body to be parsed",
+                    "schema": {
+                        "type": "object"
+                    }
+                }
+            ],
+            "produces": [
+                "application/json"
+            ],
+            "responses": {
+                "200": {
+                    "description": "The result of parsing"
+                }
+            }
+        }
     }
 }
