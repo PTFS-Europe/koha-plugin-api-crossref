@@ -132,11 +132,15 @@ sub parse_to_ill {
 sub _return_response {
     my ( $response, $c ) = @_;
     return $c->render(
-        status => $response->{errorcode} || 200,
         openapi => {
+            errors => [
+                {
+                    errorcode => $response->{errorcode},
+                    message => $response->{error}
+                }
+            ] || [],
             results => {
-                result => $response->{success} || [],
-                errors => $response->{error} || []
+                result => $response->{success} || []
             }
         }
     );
