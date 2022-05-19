@@ -131,19 +131,21 @@ sub parse_to_ill {
 
 sub _return_response {
     my ( $response, $c ) = @_;
-    return $c->render(
+    my $to_render = {
         openapi => {
-            errors => [
-                {
-                    errorcode => $response->{errorcode},
-                    message => $response->{error}
-                }
-            ] || [],
+            errors => [],
             results => {
                 result => $response->{success} || []
             }
-        }
-    );
+         }
+    };
+    if ($response->{errorcode} || $response->{error}) {
+        $to_render->{openapi}->{errors} = [{
+            errorcode => $response->{errorcode},
+            message => $response->{error}
+        }];
+    }
+    return $c->render(%{$to_render});
 }
 
 sub _get_email {
