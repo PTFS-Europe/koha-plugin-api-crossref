@@ -52,7 +52,7 @@ sub parse_to_ill {
 
     my $body = $c->validation->param('body');
 
-    my $metadata = $body->{message} || {};    
+    my $metadata = $body->{results}->{result}->{message} || {};
 
     # Map Koha core ILL props to Crossref
     my $mapping = {
@@ -95,7 +95,10 @@ sub parse_to_ill {
         },
         article_title => {
             prop => 'title',
-            value => sub { return shift; }
+            value => sub {
+                my $val = shift;
+                return ${$val}[0];
+            }
         },
         article_author => {
             prop => 'author',
