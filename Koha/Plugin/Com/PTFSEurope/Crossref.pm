@@ -11,7 +11,7 @@ use LWP::UserAgent;
 use HTTP::Request;
 use JSON qw( encode_json decode_json );
 
-our $VERSION = "1.0.0";
+our $VERSION = "1.1.0";
 
 our $metadata = {
     name            => 'Crossref',
