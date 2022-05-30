@@ -68,6 +68,7 @@ sub configure {
 
 sub provides_api {
     return {
+        name                  => 'Crossref',
         api_namespace         => api_namespace(),
         type                  => 'search',
         identifiers_supported => ['doi'],
