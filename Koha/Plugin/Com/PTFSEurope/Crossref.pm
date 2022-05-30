@@ -66,6 +66,17 @@ sub configure {
     }
 }
 
+sub provides_api {
+    return {
+        api_namespace         => api_namespace(),
+        type                  => 'search',
+        identifiers_supported => ['doi'],
+        endpoint              => '/works',
+        method                => 'GET',
+        provide_identifier_in => 'query'
+    };
+}
+
 sub api_routes {
     my ($self, $args) = @_;
 
