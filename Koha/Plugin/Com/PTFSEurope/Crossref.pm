@@ -73,7 +73,7 @@ sub provides_api {
         type                  => 'search', # Type of API this is
         identifiers_supported => [ # The identifiers this service can use
             doi => {
-                regex => qr/^((http|https):\/\/(dx\.)?doi\.org\/|doi:)?(?<identifier>10\..*)$/, # Regex for identifying these identifiers
+                regex      => '^((http|https):\/\/(dx\.)?doi\.org\/|doi:)?(?<identifier>10\..*)$', # Regex for identifying these identifiers
                 param_name => 'doi' # When passing one of these identifiers to the API, name of the parameter
             }
         ],
